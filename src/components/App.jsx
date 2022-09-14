@@ -1,5 +1,5 @@
-import React,{useReducer} from "react";
-import "./App.css"
+import React,{useEffect, useReducer} from "react";
+import "../App.css"
 
 import{engineReducer, initState} from "./engineReducer"
 
@@ -17,8 +17,19 @@ import{engineReducer, initState} from "./engineReducer"
  */
 function App() {
 const [state, dispatch] = useReducer(engineReducer, initState);
+/* useEffect(()=>{
+    const randomStart= Math.floor(Math.random() * 2);
+    setStart(randomStart);
+},[])
 
-    return (
+function setStart(randomNum){
+    dispatch({
+        type:"startStop",
+        val:randomNum
+    })
+} */
+
+return (
     <div className="container">
             <h1>Boating with useReducer</h1>
             <div className="engineP">

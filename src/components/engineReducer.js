@@ -5,12 +5,13 @@ export const initState = {
   gear: 0,
   distance: 0,
 };
+
 //Reducer for execute the engine
 export const engineReducer = (state, action) => {
   switch (action.type) {
     //checking state if false then set true - the button for false is "Start" and when click "Start" then state turn to false and button is "Stop"
     case "startStop": {
-      if (state.startState === false) {
+      if (state.startState === false && Math.random() > 0.5) {
         return {
           ...state,
           startState: true,
@@ -41,7 +42,7 @@ In case Engine is OFF (startState : false) then popup the Alert and return to st
     }
     //gear between -2 and 5 and state of Engine is ON can gearDown
     case "gearDown": {
-      if (state.gear > -2 && state.gear < 5 && state.startState === true) {
+      if (state.gear > -2 && state.gear <= 5 && state.startState === true) {
         return {
           ...state,
           gear: state.gear - 1,
@@ -64,57 +65,26 @@ Speed up has 4 cases:
 4. gear = -2 the speed is getting faster (+5)
 */
     case "speedUp": {
-      if (state.gear > 0 && state.gear < 5 && state.startState === true) {
+      if (state.gear !== 0 && state.gear < 5 && state.startState === true) {
         return {
           ...state,
-          speed: state.speed + 1,
+          speed: state.speed + 1 * Math.abs(state.gear),
           distance: state.speed * 5,
         };
-      } else if (state.gear === 5 && state.startState === true) {
-        return {
-          ...state,
-          speed: state.speed + 5,
-          distance: state.speed * 5,
-        };
-      } else if (state.gear === -1 && state.startState === true) {
-        return {
-          ...state,
-          speed: state.speed + 1,
-          distance: state.speed * 5,
-        };
-      } else if (state.gear === -2 && state.startState === true) {
-        return {
-          ...state,
-          speed: state.speed + 5,
-          distance: state.speed * 5,
-        };
-      } else if (state.gear === 0) {
-        {
-          alert("Engine is OFF");
-          return { ...state };
-        }
       }
+      return { ...state };
     }
 
     //decrease the speed in case gear between 0 and 5 and check the speed is greater than 0 ( speed cannot be a minus value) if speed to 0 then set it to 0
     case "speedDown": {
-      if (state.gear > 0 && state.gear <= 5 && state.startState === true) {
-        if (state.speed > 0) {
-          return {
-            ...state,
-            speed: state.speed - 5,
-          };
-        } else return { speed: 0 };
-      } else if (
-        state.gear === 0 ||
-        state.startState === false ||
-        state.speed <= 0
-      ) {
-        {
-          alert("Engine is OFF");
-          return { ...state };
-        }
+      if (state.gear !== 0 && state.gear < 5 && state.startState === true) {
+        return {
+          ...state,
+          speed: state.speed - 1 * Math.abs(state.gear),
+          distance: state.speed * 5,
+        };
       }
+      return { ...state };
     }
 
     default:
