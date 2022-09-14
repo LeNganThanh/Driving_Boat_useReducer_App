@@ -9,7 +9,7 @@ export const initState = {
 //Reducer for execute the engine
 export const engineReducer = (state, action) => {
   switch (action.type) {
-    //checking state if false then set true - the button for false is "Start" and when click "Start" then state turn to false and button is "Stop"
+    //checking state if false then set true and give 50% chance to start :) - the button for false is "Start" and when click "Start" then state turn to false and button is "Stop"
     case "startStop": {
       if (state.startState === false && Math.random() > 0.5) {
         return {
